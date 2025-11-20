@@ -89,14 +89,12 @@ class LLaDAEvalHarness(LM):
         super().__init__()
 
         accelerator = accelerate.Accelerator()
-        if accelerator.num_processes > 1:
-            self.accelerator = accelerator
-        else:
-            self.accelerator = None
+        self.accelerator = accelerator
         
         model_kwargs = {}
         if self.accelerator is not None:
-            model_kwargs.update({'device_map': {'': f'{self.accelerator.device}'}})
+            model_kwargs.update({'device_map': 'auto'})
+
         config = AutoConfig.from_pretrained(model_path)
         config.flash_attention = True
         self.model = LLaDAModelLM.from_pretrained(model_path, trust_remote_code=True, torch_dtype=torch.bfloat16, config=config, **model_kwargs)
@@ -105,6 +103,7 @@ class LLaDAEvalHarness(LM):
         self.device = torch.device(device)
         if self.accelerator is not None:
             self.model = self.accelerator.prepare(self.model)
+            print("Using Accelerator: ", self.accelerator.device)
             self.device = torch.device(f'{self.accelerator.device}')
             self._rank = self.accelerator.local_process_index
             self._world_size = self.accelerator.num_processes
@@ -278,6 +277,7 @@ class LLaDAEvalHarness(LM):
         output = []
         num_tokens = 0
         num_nfe = 0
+        total_avg_unmask = 0
         processed_count = 0
         if self.save_dir is not None:
             os.makedirs(self.save_dir, exist_ok=True)
@@ -341,8 +341,9 @@ class LLaDAEvalHarness(LM):
                     generated_answer, nfe = generate_with_dual_cache(self.model, input_ids, steps=self.steps, gen_length=self.gen_length, block_length=self.block_length, 
                                         temperature=0, remasking=self.remasking, mask_id=self.mask_id, threshold=self.threshold, factor=self.factor)
                 else:
-                    generated_answer, nfe = generate_with_prefix_cache(self.model, input_ids, steps=self.steps, gen_length=self.gen_length, block_length=self.block_length, 
+                    generated_answer, nfe, avg_unmask = generate_with_prefix_cache(self.model, input_ids, steps=self.steps, gen_length=self.gen_length, block_length=self.block_length, 
                                         temperature=0, remasking=self.remasking, mask_id=self.mask_id, threshold=self.threshold, factor=self.factor)
+                    total_avg_unmask += avg_unmask
             else:
                 generated_answer, nfe = generate(self.model, input_ids, steps=self.steps, gen_length=self.gen_length, block_length=self.block_length, 
                                         temperature=0, remasking=self.remasking, mask_id=self.mask_id, threshold=self.threshold, factor=self.factor)
@@ -381,6 +382,8 @@ class LLaDAEvalHarness(LM):
                 # print('question: ', question)
                 print('answer: ', batched_generated_answer[i])
                 print('nfe: ', nfe)
+                print('avg unmask: ', avg_unmask)
+                print('avg avg unmask: ', total_avg_unmask / len(output))
                 print('avg nfe: ', num_nfe / len(output))
                 print('=' * 20, end='\n\n')
             # self.accelerator.wait_for_everyone()

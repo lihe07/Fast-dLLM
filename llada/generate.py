@@ -153,6 +153,7 @@ def generate_with_prefix_cache(model, prompt, steps=128, gen_length=128, block_l
     steps = steps // num_blocks
 
     nfe = 0
+    unmask_count = 0
             
     for num_block in range(num_blocks):
         current_block_start = prompt.shape[1] + num_block * block_length
@@ -200,16 +201,20 @@ def generate_with_prefix_cache(model, prompt, steps=128, gen_length=128, block_l
             else:
                 x0, transfer_index = get_transfer_index_dynamic(logits, temperature, remasking, mask_index, 
                                                 x[:, current_block_start:], None, factor)
+
+            count = transfer_index.sum()
+            unmask_count += count
+
             x[:, current_block_start:][transfer_index] = x0[transfer_index]
             
             i += 1
 
 
-    return x, nfe
+    return x, nfe, (unmask_count / nfe)
 
 
 @torch.no_grad()
-@torch.compile(mode="max-autotune", fullgraph=True)
+# @torch.compile(mode="max-autotune", fullgraph=True)
 def generate_with_dual_cache(
     model, prompt, steps=128, gen_length=128, block_length=128, temperature=0.,
     remasking="low_confidence", mask_id=126336, threshold=None, factor=None
