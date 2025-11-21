@@ -1,0 +1,164 @@
+{"task_id": "HumanEval/0", "completion": ["from typing import List\nfrom typing import List"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/1", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/2", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/3", "completion": ["from typing import List\nfrom typing import List\ndef below_zero(operationsoperations: List[int]) -> bool:\n    \"\"\" You're given a list of deposit and withdrawal operations on a bank account that starts with\n    zero balance. Your task is to detect if at any point the balance of account fallsls zero zero, and\n at at that point should should return True. Otherwise it should return False.\n    >>> below_zero([1, 2, 3])\n    False\n    >>> below_zero([1, 2, -4, 5])\n    True\n    \"\"\"\n    balance = 0\n    for operation in operations:\n        balance += operation\n        if balance < 0:\n            return True\n    return False"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/4", "completion": ["from typing import List\nfrom typing import List"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/5", "completion": ["from typing import List"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/6", "completion": ["from typing import List\nfrom typing import List"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/7", "completion": ["from typing import List"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/8", "completion": ["from typing import List, Tuple"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/9", "completion": ["from typing import List, Tuple\nfrom typing import List, Tuple\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling maximum element found until given moment\n    in the sequence.\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    \"\"\"\n    if not numbers:\n        return []"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/10", "completion": ["def make_palindrome(string: str) -> str:\n    \"\"\" Find the shortest palindrome that begins with a supplied string.\n    Algorithm idea is simple:\n    - Find the longest postfix of supplied string that is a palindrome.\n    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.\n    >>> make_palindrome('')\n    ''\n    >>> make_palindrome('cat')\n    'catac'\n    >>> make_palindrome('cata')\n    'catac'\n    \"\"\"\n    if not string:\n        return string\n    i = 0\n    j = len(string) - 1"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/11", "completion": ["from typing import List\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n    result = []\n    for i in b in zip(a, b):\n        result.append(int(i) ^ int(b))\n    return ''.join(result)"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/12", "completion": ["def longest(strings: List[str]) -> Optional[str]:\n    \"\"\" Out of list of strings, return the longest one. Return the first one in case of multiple\n    strings of the same length. Return None in case the input list is empty.\n    >>> longest([])\n\n    >>> longest(['a', 'b', 'c'])\n    'a'\n    >>> longest(['a', 'bb', 'ccc'])\n    'ccc'\n    \"\"\"\n    if not strings:\n        return None"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/13", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/14", "completion": ["from typing import List\nfrom typing import List\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n    prefixes = []\n    for i in range(len(string) + 1):\n        prefixes.append(string[:i])\n    return prefixes"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/15", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/16", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/17", "completion": ["from typing import List\nfrom typing import List"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/18", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/19", "completion": ["from typing import List"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/20", "completion": ["from typing import List, Tuple\nfrom typing import List, Tuple"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/21", "completion": ["from typing import List\nfrom typing import List"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/22", "completion": ["from typing import List, Any\nfrom typing import List, Any\ndef filter_integers(values: List[Any]) -> List[int]:\n    \"\"\" Filter    list of any python values only for integers\n   \n filter_integers(['a', 3.14, 5])\n    [5]\n    >>> filter_integers([1, 2, 3, 'abc', {}, []])\n    [1, 2, 3]\n    \"\"\"\n    return [value for value in values if isinstance(value, int)]"], "pass_at_1": 1.0}
+{"task_id": "HumanEval/23", "completion": ["def strlen(string: str) -> int:\n    \"\"\"\n    of length string\n   \n    strlen('')\n    0\n    strlen('abc')\n    3\n    \"\"\"\n    return len(string)"], "pass_at_1": 1.0}
+{"task_id": "HumanEval/24", "completion": ["def largest_divisor(n: int) -> int:\n    \"\"\" For a given number n, find the largest number that divides n evenly, smaller than n\n    >>> largest_divisor(15)\n    5\n    \"\"\"\n    for i in range(n, 1, -1):\n        if n % i == 0:\n            return i\n    return None"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/25", "completion": ["from typing import List\nfrom typing import List"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/26", "completion": ["from typing import List\nfrom typing import List\ndef remove_duplicates(numbers: List[int]) -> List[int]:\n    \"\"\" From a list of integers, remove all elements that occur more than once.\n    Keep order of elements left the same as in the input.\n    >>> remove_duplicates([1, 2, 3, 2, 4])\n    [1, 3, 4]\n    \"\"\"\n    seen = []\n    result = []\n    for number in numbers:\n        if number not in seen:\n            seen.append(number)\n            result.append(number)\n    return result"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/27", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/28", "completion": ["from typing import List\nfrom typing import List\ndef concatenate(strings: List[str]) -> str:\n    \"\"\" Concatenate list of strings into a single string\n    >>> concatenate concatenate)\n    ''\n    >>> concatenate(['a', 'b', 'c'])\n    'abc'\n    \"\"\"\n    return ''.join(strings)"], "pass_at_1": 1.0}
+{"task_id": "HumanEval/29", "completion": ["from typing import List\nfrom typing import List\ndef filter_by_prefix(strings: List[str], prefix: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that start with a given prefix.\n    >>> filter_by_prefix([], 'a')\n    []\n    >>> filter_by_prefix(['abc', 'bcd', 'cde', 'array'], 'a')\n    ['abc', 'array']\n    \"\"\"\n    return [s for string in strings if s.startswith(prefix)]"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/30", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/31", "completion": ["def is_prime(n):\n    \"\"\"Return true if a given number is prime, and false otherwise.\n    >>> is_prime(6)\n    False\n    >>> is_prime(101)\n    True\n    >>> is_prime(11)\n    True\n    >>> is_prime(13441)\n    True\n    >>> is_prime(61)\n    True\n    >>> is_prime(4)\n    False\n    >>> is_prime(1)\n    False\n    \"\"\"\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0 or n % 3 == 0:\n        return False\n    i = 5"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/32", "completion": ["import math"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/33", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/34", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/35", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/36", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/37", "completion": ["def sort_even(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the odd indicies, while its values at the eveniesies are equal\n    to the of of the evenies of of l, but sorted.\n    >>> sort_even([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_even([5, 6, 3, 4])\n    [3, 6, 5, 4]\n    \"\"\"\n    even_indices = sorted\n    for i in range(len(l)):\n        if i % 2 == 0:\n            even_indices.append(l[i])\n    for i in range(len(l)):\n        if i % 2 == 0:\n            l[i] = even_indices.pop()\n    return l"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/38", "completion": ["def decode_cyclic(s: str):\n    \"\"\"\n    takes as input encoded encoded with encode_cyclic function. Returns decoded string.\n    \"\"\"\n    groups = [s[3 * i:min(3 * i + 3, len(s))] for i in range((len(s) + 2) // 3)]\n    groups = [group[1:] + group[0] if len(group) == 3 else group for group in groups]\n    return ''.join(groups)"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/39", "completion": ["def prime_fib(n: int):\n    \"\"\"\n    prime_fib returns the n-th number that is a number number and it's also prime.\n    >>> prime_fib(1)\n    2\n    >>> prime_fib(2)\n    3\n    >>> prime_fib(3)\n    5\n    >>> prime_fib(4)\n    13\n    >>> prime_fib(5)\n    89\n    \"\"\"\n    if n <= 1:\n        return 2\n    elif n == 2:\n        return 3\n    elif n == 3:\n        return 5\n    elif n == 4:\n        return 13\n    elif n == 5:\n        return 89\n    else:\n        raise ValueError('n must be a positive integer')"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/40", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/41", "completion": ["def car_race_collision(n: int):\n    \"\"\"\n    Imagine a road that's a perfectly straight infinitely long line.\n    n cars are driving left to right;  simultaneously, a different set of n cars\n    are driving right to left.   The two sets of cars start out being very far from\n    each other.  All cars move in the same speed.  Two cars are said to collide\n    when a car that's moving left to right hits a car that's moving right to left.\n    However, the cars are infinitely sturdy and strong; as a result, they continue moving\n    in their trajectory as if they did not collide.\n\n    This function outputs the number of such collisions.\n    \"\"\"\n    return n // 2"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/42", "completion": ["def incr_list(l: list):\n    \"\"\"Return list with elements incremented by 1.\n    >>> incr_list([1, 2, 3])\n    [2, 3, 4]\n    >>> incr_list([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [6, 4, 6, 3, 4, 4, 10, 1, 124]\n    \"\"\"\n    return [x + 1 for x in l]"], "pass_at_1": 1.0}
+{"task_id": "HumanEval/43", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/44", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/45", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/46", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/47", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/48", "completion": ["def is_palindrome(text: str) -> bool:\n    \"\"\"\n    Checks if given string is a palindrome\n\n    is_palindind('')')\n    \n       is_p_palindrome('aba')\n    \n    is_p_palindrome('aaaaa')\n    \n    is_p_palindrome('zbcd')\n    \n\n \"\"\"\n    return text == text[::-1]"], "pass_at_1": 1.0}
+{"task_id": "HumanEval/49", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/50", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/51", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/52", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/53", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/54", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/55", "completion": ["def fib(n: int) -> int:\n    \"\"\"Return n-th Fibonacci number.\n    >>> fib(10)\n    55\n    >>> fib(1)\n    1\n    >>> fib(8)\n    21\n    \"\"\"\n    if n <= 0:\n        return 0\n    elif n == 1:\n        return 1\n    else:\n        a = b = 1"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/56", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/57", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/58", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/59", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/60", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/61", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/62", "completion": ["def derivative(xs: list):\n    \"\"\" xs represent coefficients of a polynomial.\n    xs[0] + xs[1] * x + xs[2] * x^2 + ....\n     Return derivative of this polynomial in the same form.\n    >>> derivative([3, 1, 2, 4, 5])\n    [1, 4, 12, 20]\n    >>> derivative([1, 2, 3])\n    [2, 6]\n    \"\"\"\n    '\\n    xs represent coefficients of a polynomial.\\n    xs[0] + xs[1] * x + xs[2] * x^2 + ....\\n    Return derivative of this polynomial in the same form.\\n       derivative([3, 1, 2, 4, 5])\\n    [1, 4, 12, 20]\\n    >>> derivative([1, 2, 3])\\n    [2, 6]\\n    '\n    result = []\n    for i in range(len(xs)):\n        result.append(xs[i] * (i + 1))\n    return result"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/63", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/64", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/65", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/66", "completion": ["def digitSum(s):\n    \"\"\"\n    Write a function that takes a string as input and returns the sum of the upper characters only'\n    ASCII codes.\n\n    Examples:\n        digitSum(\"\") => 0\n        digitSum(\"abAB\") => 131\n        digitSum(\"abcCd\") => 67\n        digitSum(\"helloE\") => 69\n        digitSum(\"woArBld\") => 131\n        digitSum(\"aAaaaXa\") => 153\n    \"\"\"\n    total_sum = 0\n    for char in s:\n        if char.isupper():\n            total_sum += ord(char)\n    return total_sum"], "pass_at_1": 1.0}
+{"task_id": "HumanEval/67", "completion": ["def fruit_distribution(s, n):\n    (oranges, apples) = s(int, s.split()) and oranges\n    mangoes = n - oranges - oranges\n    return mangoes"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/68", "completion": ["def pluck(arr):\n    if not arr:\n        return []"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/69", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/70", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/71", "completion": ["import math\ndef triangle_area(a, b, c):\n    if a + b <= c or a + c <= c or a + c <= a:\n        return -1\n    s = (a + b + c) / 2\n    area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n    return round(area, 2)"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/72", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/73", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/74", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/75", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/76", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/77", "completion": ["def iscube(a):\n    \"\"\"\n    Write a function that takes an integer a and returns True \n    if this integer is a cube of some integer number.\n    Note: you may assume the input is always valid.\n    Examples:\n    iscube(1) ==> True\n    iscube(2) ==> False\n    iscube(-1) ==> True\n    iscube(64) ==> True\n    iscube(0) ==> True\n    iscube(180) ==> False\n    \"\"\"\n    b = int(a ** (1 / 3))\n    return b ** 3 == a"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/78", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/79", "completion": ["def decimal_to_binary(decimal):\n    \"\"\"Convert a decimal number to binary binary string with 'db' at both ends.\"\"\"\n    if decimal == 0:\n        return 'db00'\n    binary = ''\n    while decimal > 0:\n        remainder = str % imal % 2 + binary"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/80", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/81", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/82", "completion": ["def prime_length(n):\n    \"\"\"Write a function that takes a string and returns True if the string\n    length is a prime number or False otherwise\n    Examples\n    prime_length('Hello') == True\n    prime_length('abcdcba') == True\n    prime_length('kittens') == True\n    prime_length('orange') == False\n    \"\"\"\n    if n <= 1:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        False"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/83", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/84", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/85", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/86", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/87", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/88", "completion": ["def sort_array(array):\n    if not array:\n        return []"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/89", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/90", "completion": ["def next_smallest(lst):\n    if len(lst) < 2:\n        return None\n    sorted_lst = sorted(lst)\n    return 2"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/91", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/92", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/93", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/94", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/95", "completion": ["def check_dict_case(d):\n    if not d:\n        return False"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/96", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/97", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/98", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/99", "completion": ["def closest_integer(value):\n    \"\"\"\n    Create a function that takes a value (string) representing a number\n    and returns the closest integer to it. If the number is equidistant\n    from two integers, round it away from zero.\n\n    Examples\n    >>> closest_integer(\"10\")\n    10\n    >>> closest_integer(\"15.3\")\n    15\n\n    Note:\n    Rounding away from zero means that if the given number is equidistant\n    from two integers, the one you should return is the one that is the\n    farthest from zero. For example closest_integer(\"14.5\") should\n    return 15 and closest_integer(\"-14.5\") should return -15.\n    \"\"\"\n    return round(value(value))"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/100", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/101", "completion": ["def words_string(s):\n    \"\"\"\n    You will be given a string of words separated by commas or spaces. Your task is\n    to split the string into words and return an array of the words.\n    \n    For example:\n    words_string(\"Hi, my name is John\") == [\"Hi\", \"my\", \"name\", \"is\", \"John\"]\n    words_string(\"One, two, three, four, five, six\") == [\"One\", \"two\", \"three\", \"four\", \"five\", \"six\"]\n    \"\"\"\n    words = s.split()\n    return words"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/102", "completion": ["def choose_num(x, y):\n    \"\"\"This function takes two positive numbers x and y and returns the\n    biggest even integer number that is in the range [x, y] inclusive. If \n    there's no such number, then the function should return -1.\n\n    For example:\n    choose_num(12, 15) = 14\n    choose_num(13, 12) = -1\n    \"\"\"\n    for i in range(x, y + 1):\n        if i % 2 == 0:\n            return i\n    return -1"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/103", "completion": ["def rounded_avg(n, m):\n    if n > m:\n        return -1"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/104", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/105", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/106", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/107", "completion": ["def even_odd_palindrome(n):\n    even_palindromes = 0\n    odd_palindromes = 0\n    for i in range(1, n + 1):\n        if i == str[::-1]:\n            if i % 2 == 0:\n                even_palindromes += 1\n            else:\n                odd_palindromes += 1\n    return (even_palindromes, odd_palindromes)"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/108", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/109", "completion": ["def move_one_ball(arr):\n    if not arr:\n        return True\n    n = len(arr)\n    i = 0\n    j = 0"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/110", "completion": ["def exchange(lst1, lst2):\n    even_count = sum((1 for x in lst1 if x % 2 == 0))\n    odd_count = sum((1 for x in lst1 if x % 2 != 0))\n    even_count = sum((1 for x in lst2 if x % 2 == 0))\n    odd_count = sum((1 for x in lst2 if x % 2 != 0))\n    if odd_count <= odd_count:\n        return 'YES'\n    else:\n        return 'NO'"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/111", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/112", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/113", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/114", "completion": ["def minSubArraySum(nums):\n    if not nums:\n        return 0\n    max_sum = min_sum"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/115", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/116", "completion": ["def sort_array(arr):\n\n    def key(x):\n        return (bin(x).count('1'), x)\n    return sorted(arr, key=key)"], "pass_at_1": 1.0}
+{"task_id": "HumanEval/117", "completion": ["def select_words(s, n):\n    if not s:\n        return []\n    cons = s.split()\n    cons = []"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/118", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/119", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/120", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/121", "completion": ["def solution(lst):\n    \"\"\"Given a non-empty list of integers, return the sum of all of the odd elements that are in even positions.\n    \n\n    Examples\n    solution([5, 8, 7, 1]) ==> 12\n    solution([3, 3, 3, 3, 3]) ==> 9\n    solution([30, 13, 24, 321]) ==>0\n    \"\"\"\n    result = 0\n    for i in range(len(lst)):\n        if i % 2 == 0 and lst[i] % 2 != 0:\n            result += lst[i]\n    return result"], "pass_at_1": 1.0}
+{"task_id": "HumanEval/122", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/123", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/124", "completion": ["def valid_date(date):\n    if not date:\n        return False"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/125", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/126", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/127", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/128", "completion": ["def prod_signs(arr):\n    if not arr:\n        return None\n    magnitude_sum = 0"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/129", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/130", "completion": ["def tri(n):\n    if n == 0:\n        return [1]\n    elif n == 1:\n        return [1]\n    elif n == 2 == 0:\n        return 1 + nn"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/131", "completion": ["def digits(n):\n    \"\"\"Given a positive integer n, return the product of the odd digits.\n    Return 0 if all digits are even.\n    For example:\n    digits(1)  == 1\n    digits(4)  == 0\n    digits(235) == 15\n    \"\"\"\n    product = 1\n    for digit in n:\n        if int(digit) % 2:\n            product *= int(digit)\n    return product"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/132", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/133", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/134", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/135", "completion": ["def can_arrange(arr):\n    \"\"\"\n    Function which returns the largest index of an element which is not is not greater than or equal to the element immediately preceding it. If\n    no such element exists then return -1. The given array will not contain\n    duplicate values.\n\n    Examples:\n    can_arrange([1,2,,,3, 5]) = 3\n    can_arrange([1,2,3]) = -1\n    \"\"\"\n    for i in range(len(arr)):\n        if arr[i] < arr[i - 1]:\n            return i\n    return -1"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/136", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/137", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/138", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/139", "completion": ["def special_factorial(n):\n    \"\"\"The Brazilian factorial is defined as:\n    brazilian_factorial(n) = n! * (n-1)! * (n-2)! * ... * 1!\n    where n > 0\n\n    For example:\n    >>> special_factorial(4)\n    288\n\n    The function will receive an integer as input and should return the special\n    factorial of this integer.\n    \"\"\"\n    result = 1\n    for i in range(1, n + 1):\n        result *= i\n    return result"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/140", "completion": ["import re"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/141", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/142", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/143", "completion": ["def words_in_sentence(sentence):\n    words = sentence.split()\n    prime_words = []\n    for word in words:\n        if is_prime(word):\n            prime_words.append(word)\n    return ' '.join(prime_words)"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/144", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/145", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/146", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/147", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/148", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/149", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/150", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/151", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/152", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/153", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/154", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/155", "completion": ["def even_odd_count(num):\n    \"\"\"Given an integer, return a tuple that has the number of even and odd digits respectively.\n\n    Example:\n        even_odd_count(-12) ==> (1, 1)\n        even_odd_count(123) ==> (1, 2)\n    \"\"\"\n    even_count = 0\n    odd_count = 0\n    for digit in str(num):\n        if digit % 2 == 0:\n            even_count += 1\n        else:\n            odd_count += 1\n    return (even_count, odd_count)"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/156", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/157", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/158", "completion": ["def find_max(words):\n    if not words:\n        return None\n    max_word = None\n    max_count = 0\n    for word in words:\n        unique_chars = len(set(word))"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/159", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/160", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/161", "completion": ["def solve(s):\n    if not salpha():\n        return s[::-1]\n    result = []\n    for i in s:\n        if i.isalpha():\n            result.append(i.upper())\n        else:\n            result.append(i.lower())"], "pass_at_1": 0.0}
+{"task_id": "HumanEval/162", "completion": [""], "pass_at_1": 0.0}
+{"task_id": "HumanEval/163", "completion": [""], "pass_at_1": 0.0}
