@@ -164,6 +164,11 @@ def generate(
     return x, nfe
 
 
+tokenizer = AutoTokenizer.from_pretrained(
+    "GSAI-ML/LLaDA-8B-Instruct", trust_remote_code=True
+)
+
+
 @torch.no_grad()
 def generate_with_prefix_cache(
     model,
@@ -272,7 +277,14 @@ def generate_with_prefix_cache(
         i = 1
         while True:
             # If nothing in the current block is masked, break
-            if (x[:, current_block_start:current_block_end] == mask_id).sum() == 0:
+            if (
+                x[MAIN_BATCH, current_block_start:current_block_end] == mask_id
+            ).sum() == 0:
+                # Decode the current block, with special tokens
+                decoded_block = tokenizer.batch_decode(x, skip_special_tokens=False)
+                print("Decoded block:", decoded_block)
+
+                print("Current block fully unmasked. Moving to next block.")
                 break
             nfe += 1
 
@@ -326,6 +338,7 @@ def generate_with_prefix_cache(
                     .view(-1)
                 )
 
+                print("Planned to merge", merge_positions.sum().item(), "tokens.")
                 merge_positions = merge_positions & (
                     ~decoded_main
                 )  # to prevent replacing already decoded tokens
