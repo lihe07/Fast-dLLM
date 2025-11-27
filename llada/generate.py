@@ -215,7 +215,9 @@ def generate_with_prefix_cache(
     nfe = 0
     unmask_count = 0
 
-    def transfer_index_both(logits: torch.Tensor, mask_index: torch.Tensor):
+    def transfer_index_both(
+        x: torch.Tensor, logits: torch.Tensor, mask_index: torch.Tensor
+    ):
         # Compute transfer for main branch
         x0_main, transfer_index_main = get_transfer_index(
             logits[MAIN_BATCH : MAIN_BATCH + 1],
@@ -256,7 +258,7 @@ def generate_with_prefix_cache(
         mask_index = x == mask_id
         mask_index[:, current_block_end:] = 0
 
-        x0, transfer_index = transfer_index_both(output.logits, mask_index)
+        x0, transfer_index = transfer_index_both(x, output.logits, mask_index)
         x[transfer_index] = x0[transfer_index]
 
         # new_past_key_values = []
@@ -296,6 +298,7 @@ def generate_with_prefix_cache(
             x0 = torch.argmax(logits_with_noise, dim=-1)  # b, l
 
             x0, transfer_index = transfer_index_both(
+                x[:, current_block_start:],
                 logits,
                 mask_index,
             )
