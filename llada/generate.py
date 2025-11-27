@@ -324,6 +324,10 @@ def generate_with_prefix_cache(
                     .view(-1)
                 )
 
+                merge_positions = merge_positions & (
+                    ~decoded_main
+                )  # to prevent replacing already decoded tokens
+
                 # Perform the merge
                 x[MAIN_BATCH, current_block_start:][merge_positions] = x[
                     SPEC_BATCH, current_block_start:
