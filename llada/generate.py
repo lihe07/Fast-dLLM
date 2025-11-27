@@ -281,7 +281,10 @@ def generate_with_prefix_cache(
                 x[MAIN_BATCH, current_block_start:current_block_end] == mask_id
             ).sum() == 0:
                 # Decode the current block, with special tokens
-                decoded_block = tokenizer.batch_decode(x, skip_special_tokens=False)
+                decoded_block = tokenizer.decode(
+                    x[MAIN_BATCH, current_block_start:current_block_end],
+                    skip_special_tokens=False,
+                )
                 print("Decoded block:", decoded_block)
 
                 print("Current block fully unmasked. Moving to next block.")
