@@ -178,6 +178,7 @@ def generate_with_prefix_cache(
     factor=None,
     speculative_threshold=0.6,
     speculative_interval=4,
+    speculative_window=3,
 ):
     """
     Args:
@@ -248,10 +249,9 @@ def generate_with_prefix_cache(
         current_block_start = prompt_length + num_block * block_length
         current_block_end = current_block_start + block_length
 
-        block_mask_index = x[:, current_block_start:current_block_end] == mask_id
-        num_transfer_tokens = get_num_transfer_tokens(block_mask_index, steps)
+        # Reset speculative branch at the beginning of each block
+        x[SPEC_BATCH] = x[MAIN_BATCH].clone()
 
-        # We comput logits for both branches at once
         output = model(x, use_cache=True)
         past_key_values = output.past_key_values
 
@@ -260,15 +260,6 @@ def generate_with_prefix_cache(
 
         x0, transfer_index = transfer_index_both(x, output.logits, mask_index)
         x[transfer_index] = x0[transfer_index]
-
-        # new_past_key_values = []
-        # for i in range(len(past_key_values)):
-        #     new_past_key_values.append(())
-        #     for j in range(len(past_key_values[i])):
-        #         new_past_key_values[i] += (
-        #             past_key_values[i][j][:, :, :current_block_start],
-        #         )
-        # past_key_values = new_past_key_values
 
         # Trims the KV cache to only include keys/values up to current_block_start
         past_key_values = tuple(
@@ -294,23 +285,64 @@ def generate_with_prefix_cache(
                 use_cache=True,
             ).logits
 
-            logits_with_noise = add_gumbel_noise(logits, temperature=temperature)
-            x0 = torch.argmax(logits_with_noise, dim=-1)  # b, l
-
             x0, transfer_index = transfer_index_both(
                 x[:, current_block_start:],
                 logits,
                 mask_index,
             )
 
-            count = transfer_index.sum()
-            unmask_count += count
+            unmask_count += transfer_index[MAIN_BATCH].sum().item()
 
             x[:, current_block_start:][transfer_index] = x0[transfer_index]
 
+            # Speculative branch merge
+            if i % speculative_interval == 0:
+                main_logits = logits[MAIN_BATCH]
+                spec_logits = logits[SPEC_BATCH]
+                # Calculate proposal tokens for both branches
+                main_proposals = torch.argmax(main_logits, dim=-1)
+                spec_proposals = torch.argmax(spec_logits, dim=-1)
+
+                decoded_main = main_proposals != mask_id
+                decoded_spec = spec_proposals != mask_id
+
+                match_positions = (
+                    (main_proposals == spec_proposals) & decoded_main & decoded_spec
+                )
+                print(f"Match positions: {match_positions.sum().item()}")
+
+                # Pool match_positions with radius = speculative_window
+                # Using max_pool1d to achieve this
+                merge_positions = (
+                    F.max_pool1d(
+                        match_positions.float().view(1, 1, -1),
+                        kernel_size=speculative_window,
+                        stride=1,
+                        padding=speculative_window // 2,
+                    )
+                    .bool()
+                    .view(-1)
+                )
+
+                # Perform the merge
+                x[MAIN_BATCH, current_block_start:][merge_positions] = x[
+                    SPEC_BATCH, current_block_start:
+                ][merge_positions]
+
+                merged_count = merge_positions.sum().item()
+                print("Merged", merged_count, "tokens from speculative branch.")
+                unmask_count += merged_count
+
+                # Check if spec branch is making progress
+                if decoded_spec.sum() < decoded_main.sum():
+                    print(
+                        f"Speculative branch decoded {decoded_spec.sum().item()} tokens, less than main branch {decoded_main.sum().item()} tokens. Resetting speculative branch."
+                    )
+                    x[SPEC_BATCH] = x[MAIN_BATCH].clone()
+
             i += 1
 
-    return x, nfe, (unmask_count / nfe)
+    return x[MAIN_BATCH : MAIN_BATCH + 1], nfe, (unmask_count / nfe)
 
 
 @torch.no_grad()
