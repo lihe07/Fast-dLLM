@@ -276,24 +276,26 @@ def generate_with_prefix_cache(
                 break
             nfe += 1
 
-            mask_index = x[:, current_block_start:] == mask_id
-            mask_index[:, block_length:] = 0
+            mask_index = x[:, current_block_start:current_block_end] == mask_id
+            # mask_index[:, block_length:] = 0
 
             logits = model(
-                x[:, current_block_start:],
+                x[:, current_block_start:current_block_end],
                 past_key_values=past_key_values,
                 use_cache=True,
             ).logits
 
             x0, transfer_index = transfer_index_both(
-                x[:, current_block_start:],
+                x[:, current_block_start:current_block_end],
                 logits,
                 mask_index,
             )
 
             unmask_count += transfer_index[MAIN_BATCH].sum().item()
 
-            x[:, current_block_start:][transfer_index] = x0[transfer_index]
+            x[:, current_block_start:current_block_end][transfer_index] = x0[
+                transfer_index
+            ]
 
             # Speculative branch merge
             if i % speculative_interval == 0:
@@ -329,9 +331,11 @@ def generate_with_prefix_cache(
                 )  # to prevent replacing already decoded tokens
 
                 # Perform the merge
-                x[MAIN_BATCH, current_block_start:][merge_positions] = x[
-                    SPEC_BATCH, current_block_start:
-                ][merge_positions]
+                x[MAIN_BATCH, current_block_start:current_block_end][
+                    merge_positions
+                ] = x[SPEC_BATCH, current_block_start:current_block_end][
+                    merge_positions
+                ]
 
                 merged_count = merge_positions.sum().item()
                 print("Merged", merged_count, "tokens from speculative branch.")
