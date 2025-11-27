@@ -278,7 +278,7 @@ def generate_with_prefix_cache(
         while True:
             # We give ONE block_lentgh of future context (full of masks)
             inference_block_end = min(
-                current_block_start + block_length, prompt_length + gen_length
+                current_block_start + 2 * block_length, prompt_length + gen_length
             )
 
             # If nothing in the current block is masked, break
