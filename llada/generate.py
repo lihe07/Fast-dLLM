@@ -216,26 +216,23 @@ def generate_with_prefix_cache(
     unmask_count = 0
 
     def transfer_index_both(logits: torch.Tensor, mask_index: torch.Tensor):
-        main_logits = logits[MAIN_BATCH : MAIN_BATCH + 1, :, :]
-        spec_logits = logits[SPEC_BATCH : SPEC_BATCH + 1, :, :]
-
         # Compute transfer for main branch
         x0_main, transfer_index_main = get_transfer_index(
-            main_logits,
+            logits[MAIN_BATCH : MAIN_BATCH + 1],
             temperature,
             remasking,
-            mask_index[MAIN_BATCH : MAIN_BATCH + 1, :],
-            x[MAIN_BATCH : MAIN_BATCH + 1, :],
+            mask_index[MAIN_BATCH : MAIN_BATCH + 1],
+            x[MAIN_BATCH : MAIN_BATCH + 1],
             None,
             threshold,
         )
         # Compute transfer for speculative branch
         x0_spec, transfer_index_spec = get_transfer_index(
-            spec_logits,
+            logits[SPEC_BATCH : SPEC_BATCH + 1],
             temperature,
             remasking,
-            mask_index[SPEC_BATCH : SPEC_BATCH + 1, :],
-            x[SPEC_BATCH : SPEC_BATCH + 1, :],
+            mask_index[SPEC_BATCH : SPEC_BATCH + 1],
+            x[SPEC_BATCH : SPEC_BATCH + 1],
             None,
             speculative_threshold,
         )
