@@ -276,6 +276,11 @@ def generate_with_prefix_cache(
 
         i = 1
         while True:
+            # We give ONE block_lentgh of future context (full of masks)
+            inference_block_end = min(
+                current_block_start + block_length, prompt_length + gen_length
+            )
+
             # If nothing in the current block is masked, break
             if (
                 x[MAIN_BATCH, current_block_start:current_block_end] == mask_id
@@ -291,17 +296,17 @@ def generate_with_prefix_cache(
                 break
             nfe += 1
 
-            mask_index = x[:, current_block_start:current_block_end] == mask_id
-            # mask_index[:, block_length:] = 0
+            mask_index = x[:, current_block_start:inference_block_end] == mask_id
+            mask_index[:, block_length:] = 0
 
             logits = model(
-                x[:, current_block_start:current_block_end],
+                x[:, current_block_start:inference_block_end],
                 past_key_values=past_key_values,
                 use_cache=True,
             ).logits
 
             x0, transfer_index = transfer_index_both(
-                x[:, current_block_start:current_block_end],
+                x[:, current_block_start:inference_block_end],
                 logits,
                 mask_index,
             )
